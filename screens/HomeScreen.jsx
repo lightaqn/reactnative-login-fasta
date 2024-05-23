@@ -10,15 +10,16 @@ import { useState, useEffect } from "react";
 
 const HomeScreen = ({ navigation }) => {
   const [update, setUpdate] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [updateFirstname, setUpdateFirstname] = useState(userData?.firstname);
   const [updateLastname, setUpdateLastname] = useState(userData?.lastname);
 
   const [userData, setUserData] = useState({});
-
+let userId = "abcd-testghjagj123"
   const fetchUser = async () => {
     try {
       const response = await fetch(
-        "https://reqres.in/api/users/abcd-testghjagj123",
+        `https://reqres.in/api/users/${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -34,21 +35,24 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [isUpdated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userUpdatebody = JSON.stringify({
-      updateFirstname,
-      updateLastname,
+      firstname:updateFirstname,
+      lastname:updateLastname,
     });
     try {
-      await fetch("https://reqres.in/api/users/abcd-testghjagj123", {
+      await fetch(`https://reqres.in/api/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: userUpdatebody,
-      }).then((res) => Alert.alert("Update Successfull"));
+      }).then((res) => {
+        Alert.alert("Update Successfull")
+      setIsUpdated(true) 
+      } );
     } catch (error) {
       console.error(error);
     }
@@ -111,6 +115,7 @@ const HomeScreen = ({ navigation }) => {
             >
               <TextInput
                 value={updateFirstname}
+                defaultValue={updateFirstname} 
                 onChangeText={setUpdateFirstname}
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -126,6 +131,7 @@ const HomeScreen = ({ navigation }) => {
 
               <TextInput
                 value={updateLastname}
+                defaultValue={updateLastname} 
                 onChangeText={(text) => setUpdateLastname(text)}
                 autoCorrect={false}
                 autoCapitalize="none"
