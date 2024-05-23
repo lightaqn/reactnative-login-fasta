@@ -32,34 +32,47 @@ const Form = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [type, setType] = useState("login");
-
-  const handleSubmit = async () => {
+let userId="abcd-testghjagj123" 
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userbody = JSON.stringify({
-      id: "abcd-testghjagj123",
+      id: userId,
       firstname,
       lastname,
       email,
+      password, 
       avatar: logo,
     });
+
+    const loginbody = JSON.stringify({
+      email, password
+    })
     try {
-      await fetch("https://reqres.in/api/users", {
+      if (type === "login" ) {
+        await fetch("https://reqres.in/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: loginbody,
+      }).then((res) => {
+        Alert.alert("Congrats, login successful");
+        return () => navigation?.navigate("Home");
+      }).catch((err) => console.error(err))
+      } else {
+        await fetch("https://reqres.in/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: userbody,
       }).then((res) => {
-        Alert.alert(
-          type === "login"
-            ? "Login Successfull"
-            : "Congrats, register successful"
-        );
+        Alert.alert("Congrats, register successful");
         return () => navigation?.navigate("Home");
-      });
+      }).catch((err) => console.error(err))
+      } 
+      
     } catch (error) {
       console.error(error);
     }
-  };
+  } 
 
   return (
     <SafeAreaView
@@ -104,29 +117,7 @@ const Form = ({ navigation }) => {
           marginVertical: 15,
         }}
       >
-        {type === "login" ? (
-          <>
-            <TextInput
-              placeholder="Enter your email"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              autoCorrect={false}
-              autoCapitalize="none"
-              style={{
-                height: 100,
-                paddingHorizontal: 15,
-                borderBottomColor: "black",
-                borderStyle: "solid",
-                color: "black",
-                fontSize: 34,
-                borderColor: "#000000",
-
-                borderWidth: 1,
-                borderRadius: 10,
-              }}
-            />
-          </>
-        ) : (
+        {type === "register" && (
           <>
             <TextInput
               placeholder="Enter your firstname"
@@ -165,7 +156,25 @@ const Form = ({ navigation }) => {
             />
           </>
         )}
+<TextInput
+              placeholder="Enter your email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              autoCorrect={false}
+              autoCapitalize="none"
+              style={{
+                height: 100,
+                paddingHorizontal: 15,
+                borderBottomColor: "black",
+                borderStyle: "solid",
+                color: "black",
+                fontSize: 34,
+                borderColor: "#000000",
 
+                borderWidth: 1,
+                borderRadius: 10,
+              }}
+            />
         <TextInput
           placeholder="password"
           secureTextEntry
@@ -234,7 +243,7 @@ const Form = ({ navigation }) => {
         style={{ width: "100%", paddingHorizontal: 15 }}
       >
         <Pressable
-          onPress={handleSubmit}
+          onPress={(e) =>handleSubmit(e)}
           style={{
             display: "flex",
             width: "100%",
@@ -356,7 +365,7 @@ const Form = ({ navigation }) => {
               : () => setType("login")
           }
         >
-          {type === "login" ? "Sign Up" : "Register"}
+          {type === "login" ? "Register" : "Login"}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
