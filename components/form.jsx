@@ -19,10 +19,7 @@ const facebook = require("../assets/facebook.png");
 const linkedin = require("../assets/linkedin.png");
 const tiktok = require("../assets/tiktok.png");
 
-// type FormProps = {
-//   type: "login" | "register";
-//   setType: (type: "login" | "register") => void;
-// };
+
 
 const Form = ({ navigation }) => {
   const [click, setClick] = useState(false);
@@ -32,9 +29,9 @@ const Form = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [type, setType] = useState("login");
-let userId="abcd-testghjagj123" 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+let userId = 52627266196371123 
+  const handleSubmit = async () => {
+    
 
     const userbody = JSON.stringify({
       id: userId,
@@ -138,7 +135,7 @@ let userId="abcd-testghjagj123"
             <TextInput
               placeholder="Enter your lastname"
               value={lastname}
-              onChangeText={(text) => setLastname(text)}
+              onChangeText={(text) =>setLastname(text) }
               autoCorrect={false}
               autoCapitalize="none"
               style={{
@@ -159,7 +156,7 @@ let userId="abcd-testghjagj123"
 <TextInput
               placeholder="Enter your email"
               value={email}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text) }
               autoCorrect={false}
               autoCapitalize="none"
               style={{
@@ -179,7 +176,7 @@ let userId="abcd-testghjagj123"
           placeholder="password"
           secureTextEntry
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => setPassword(text) }
           autoCorrect={false}
           autoCapitalize="none"
           style={{
@@ -243,7 +240,7 @@ let userId="abcd-testghjagj123"
         style={{ width: "100%", paddingHorizontal: 15 }}
       >
         <Pressable
-          onPress={(e) =>handleSubmit(e)}
+          onPress={handleSubmit}
           style={{
             display: "flex",
             width: "100%",
