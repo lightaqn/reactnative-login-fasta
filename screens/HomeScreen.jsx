@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
   const [updateLastname, setUpdateLastname] = useState(userData?.lastname);
 
   const [userData, setUserData] = useState({});
-let userId = "abcd-testghjagj123"
+let userId = 52627266196371123
   const fetchUser = async () => {
     try {
       const response = await fetch(
@@ -37,8 +37,8 @@ let userId = "abcd-testghjagj123"
     fetchUser();
   }, [isUpdated]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    
 
     const userUpdatebody = JSON.stringify({
       firstname:updateFirstname,
@@ -51,7 +51,8 @@ let userId = "abcd-testghjagj123"
         body: userUpdatebody,
       }).then((res) => {
         Alert.alert("Update Successfull")
-      setIsUpdated(true) 
+      setIsUpdated(true)
+        setUpdate(false) 
       } );
     } catch (error) {
       console.error(error);
@@ -132,7 +133,7 @@ let userId = "abcd-testghjagj123"
               <TextInput
                 value={updateLastname}
                 defaultValue={updateLastname} 
-                onChangeText={(text) => setUpdateLastname(text)}
+                onChangeText={setUpdateLastname}
                 autoCorrect={false}
                 autoCapitalize="none"
                 style={{
@@ -166,7 +167,7 @@ let userId = "abcd-testghjagj123"
                   color: "gray",
                 }}
               >
-                Email: {email}
+                Email: {userData.email}
               </Text>
             </View>
 
@@ -253,7 +254,7 @@ let userId = "abcd-testghjagj123"
             </View>
           </>
         )}
-
+        {!update && (
         <TouchableOpacity
           style={{
             display: "flex",
@@ -281,10 +282,12 @@ let userId = "abcd-testghjagj123"
               paddingTop: 15,
             }}
           >
-            {" "}
-            {!update ? "Save" : "Edit"}{" "}
+            
+            Edit
           </Text>
         </TouchableOpacity>
+        )} 
+        
       </View>
     </View>
   );
