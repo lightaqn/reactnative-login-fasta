@@ -117,7 +117,7 @@ let userId = 52627266196371123
               <TextInput
                 value={updateFirstname}
                 defaultValue={updateFirstname} 
-                onChangeText={setUpdateFirstname}
+                onChangeText={(text) => setUpdateFirstname(text)}
                 autoCorrect={false}
                 autoCapitalize="none"
                 style={{
@@ -133,7 +133,7 @@ let userId = 52627266196371123
               <TextInput
                 value={updateLastname}
                 defaultValue={updateLastname} 
-                onChangeText={setUpdateLastname}
+                onChangeText={(text) => setUpdateLastname(text)}
                 autoCorrect={false}
                 autoCapitalize="none"
                 style={{
